@@ -1,4 +1,4 @@
-package org.litespring.test.v1;
+package org.litespring.beans.factory.xml;
 
 import org.junit.Assert;
 import org.junit.Before;
