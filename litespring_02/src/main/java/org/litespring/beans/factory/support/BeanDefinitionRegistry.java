@@ -9,8 +9,18 @@ import org.litespring.beans.BeanDefinition;
  */
 public interface BeanDefinitionRegistry {
 
+    /**
+     * 注册bean的定义信息
+     * @param id
+     * @param bd
+     */
     void registerBeanDefinition(String id, BeanDefinition bd);
 
+    /**
+     * 获取bean的定义
+     * @param BeanId
+     * @return
+     */
     BeanDefinition getBeanDefinition(String BeanId);
 
 }

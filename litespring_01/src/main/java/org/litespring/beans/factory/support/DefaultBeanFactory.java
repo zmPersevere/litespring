@@ -1,6 +1,5 @@
 package org.litespring.beans.factory.support;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;

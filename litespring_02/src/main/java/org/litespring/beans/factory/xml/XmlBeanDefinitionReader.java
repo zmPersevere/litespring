@@ -33,13 +33,17 @@ public class XmlBeanDefinitionReader {
     public void loadBeanDefinitions(String configFile){
         InputStream is = null;
         try {
+            //获取默认类加载器
             ClassLoader cl = ClassUtils.getDefaultClassLoader();
+            //读取文件
             is = cl.getResourceAsStream(configFile);
             SAXReader reader = new SAXReader();
             Document doc = null;
             doc = reader.read(is);
-            Element root = doc.getRootElement();// 获取<beans>
+            // 获取<beans>
+            Element root = doc.getRootElement();
             Iterator<Element> iterator = root.elementIterator();
+            //遍历所有<bean>,并把信息注册到registry中
             while (iterator.hasNext()){
                 Element element = (Element)iterator.next();
                 String id = element.attributeValue(ID_ATTRIBUTE);

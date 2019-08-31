@@ -32,15 +32,18 @@ public class DefaultBeanFactory implements BeanFactory , BeanDefinitionRegistry{
      * @return
      */
     public Object getBean(String beanId) {
+        //获取bean的定义
         BeanDefinition bd = this.getBeanDefinition(beanId);
         if (bd == null){
             return null;
         }
+        //获取默认类加载器
         ClassLoader cl = ClassUtils.getDefaultClassLoader();
+        //获取bean的name
         String beanClassName = bd.getBeanClassName();
-
         try {
             Class<?> clazz = cl.loadClass(beanClassName);
+            //反射出类的实体
             return clazz.newInstance();
         } catch (Exception e) {
             throw new BeanCreationException("create bean for " + beanClassName + " fail");

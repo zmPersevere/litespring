@@ -1,6 +1,7 @@
 package org.litespring.test.v1;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.litespring.beans.BeanDefinition;
 import org.litespring.beans.factory.BeanCreationException;
@@ -16,13 +17,22 @@ import org.litespring.service.v1.PetStoreService;
  */
 public class BeanFactoryTest {
 
+    //根据配置文件初始化一个默认工厂
+    DefaultBeanFactory factory = null;
+    //实例化xml解析类。
+    XmlBeanDefinitionReader reader = null;
+
+    @Before
+    public void setUp(){
+        //根据配置文件初始化一个默认工厂
+        factory = new DefaultBeanFactory();
+        //实例化xml解析类。
+        reader = new XmlBeanDefinitionReader( factory );
+    }
+
 
     @Test
-    public static void testGetBean(){
-        //根据配置文件初始化一个默认工厂
-        DefaultBeanFactory factory=new DefaultBeanFactory();
-        //实例化xml解析类。
-        XmlBeanDefinitionReader reader=new XmlBeanDefinitionReader( factory );
+    public void testGetBean(){
         //开始解析xml，并把解析结果存入bean的注册类中
         reader.loadBeanDefinitions( "petstore-v1.xml" );
         //通过beanId获取bean的定义
@@ -37,10 +47,6 @@ public class BeanFactoryTest {
 
     @Test
     public void testInvalidBean(){
-        //根据配置文件初始化一个默认工厂
-        DefaultBeanFactory factory = new DefaultBeanFactory();
-        //实例化xml解析类。
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
         //开始解析xml，并把解析结果存入bean的注册类中
         reader.loadBeanDefinitions("petstore-v1.xml");
         try {
@@ -54,10 +60,6 @@ public class BeanFactoryTest {
     @Test
     public void testInvalidXML(){
         try {
-            //根据配置文件初始化一个默认工厂
-            DefaultBeanFactory factory = new DefaultBeanFactory();
-            //实例化xml解析类。
-            XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
             //开始解析xml，并把解析结果存入bean的注册类中
             reader.loadBeanDefinitions("xxx.xml");
         }catch (BeanDefinitionStoreException e){
