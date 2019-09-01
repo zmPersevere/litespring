@@ -4,22 +4,23 @@ import org.litespring.beans.factory.support.DefaultBeanFactory;
 import org.litespring.beans.factory.xml.XmlBeanDefinitionReader;
 import org.litespring.context.ApplicationContext;
 import org.litespring.core.io.ClassPathResource;
+import org.litespring.core.io.FileSystemResource;
 import org.litespring.core.io.Resource;
 
 /**
  * @Description :
  * @Author : zhangMing
- * @Date : Created in 18:00 2019-08-31
+ * @Date : Created in 18:29 2019-09-01
  */
-public class ClassPathXmlApplicationContext extends AbstractApplicationContext {
+public class FileSystemXmlApplicationContext extends AbstractApplicationContext {
 
-    public ClassPathXmlApplicationContext(String configFile){
+    public FileSystemXmlApplicationContext(String configFile){
         super(configFile);
     }
 
     @Override
     protected Resource getResourceByPath(String path) {
-        return new ClassPathResource( path );
+        return new FileSystemResource( path );
     }
 
 }
