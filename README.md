@@ -1,2 +1,4 @@
 # litespring
-从零创造spring ioc 、 aop
+liteSpring_01：实现一个简单的BeanFactory
+liteSpring_02：职责分离,把reader分离出来，最少知道原则把BeanFactory内的getBeanDefintion也抽取出来。
+liteSpring_03：实现Application.同时支持多种Resource.
