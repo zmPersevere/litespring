@@ -12,6 +12,7 @@
         <module>litespring_01</module>
         <module>litespring_02</module>
         <module>litespring_03</module>
+        <module>litespring_04</module>
     </modules>
 
     <dependencies>
