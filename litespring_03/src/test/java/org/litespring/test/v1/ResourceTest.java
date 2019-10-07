@@ -40,7 +40,6 @@ public class ResourceTest {
             //这个测试并不充分
             Assert.assertNotNull(is);
         }finally {
-
             if (is != null){
                 is.close();
             }

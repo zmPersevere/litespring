@@ -1,11 +1,11 @@
 package org.litespring.context;
 
-import org.litespring.beans.factory.support.DefaultBeanFactory;
+import org.litespring.beans.factory.BeanFactory;
 
 /**
  * @Description :
  * @Author : zhangMing
  * @Date : Created in 17:57 2019-08-31
  */
-public class ApplicationContext extends DefaultBeanFactory {
+public interface ApplicationContext extends BeanFactory {
 }

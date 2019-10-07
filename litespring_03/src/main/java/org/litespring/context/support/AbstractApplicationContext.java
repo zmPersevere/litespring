@@ -11,7 +11,7 @@ import org.litespring.core.io.Resource;
  * @Author : zhangMing
  * @Date : Created in 18:43 2019-09-01
  */
-public abstract class AbstractApplicationContext extends ApplicationContext {
+public abstract class AbstractApplicationContext implements ApplicationContext {
 
     public DefaultBeanFactory factory = null;
 
