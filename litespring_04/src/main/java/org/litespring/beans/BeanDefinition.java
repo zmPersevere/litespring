@@ -8,7 +8,6 @@ package org.litespring.beans;
 public interface BeanDefinition {
 
     public static final String SCOPE_SINGLETON = "singleton";
-
     public static final String SCOPE_PROTOTYPE = "prototype";
     public static final String SCOPE_DEFAULT = "";
 
@@ -18,11 +17,27 @@ public interface BeanDefinition {
      */
     String getBeanClassName();
 
+    /**
+     * 单例
+     * @return
+     */
     public boolean isSingleton();
 
+    /**
+     * 总是创建一个新的bean
+     * @return
+     */
     public boolean isPrototype();
 
+    /**
+     * 获取scope
+     * @return
+     */
     String getScope();
 
+    /**
+     * 设置scope
+     * @param scope
+     */
     void setScope(String scope);
 }
