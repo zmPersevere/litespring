@@ -21,6 +21,10 @@ public class ApplicationContextTestV2 {
         PetStoreService petStore = (PetStoreService)ctx.getBean("petStore");
         Assert.assertNotNull(petStore.getAccountDao());
         Assert.assertNotNull(petStore.getItemDao());
+
+
+        Assert.assertTrue(petStore.getAccountDao() instanceof AccountDao);
+        Assert.assertTrue(petStore.getItemDao() instanceof ItemDao);
     }
 
 

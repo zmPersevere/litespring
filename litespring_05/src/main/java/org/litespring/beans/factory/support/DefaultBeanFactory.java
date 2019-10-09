@@ -1,10 +1,15 @@
 package org.litespring.beans.factory.support;
 
 import org.litespring.beans.BeanDefinition;
+import org.litespring.beans.PropertyValue;
 import org.litespring.beans.factory.BeanCreationException;
 import org.litespring.beans.factory.config.ConfigurableBeanFactory;
 import org.litespring.util.ClassUtils;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -66,11 +71,11 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
         return createBean(bd);
     }
 
-    /**
+/*    *//**
      * 通过BeanDefintion创建bean
      * @param bd
      * @return
-     */
+     *//*
     private Object createBean(BeanDefinition bd) {
         //获取默认类加载器
         ClassLoader cl = this.getBeanClassLoader();
@@ -83,8 +88,71 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
         } catch (Exception e) {
             throw new BeanCreationException("create bean for " + beanClassName + " fail");
         }
+    }*/
+
+    /**
+     * 创建bean
+     * @param bd
+     * @return
+     */
+    private Object createBean(BeanDefinition bd){
+        //创建实例
+        Object bean = instantiateBean(bd);
+        //设置属性
+        populateBean(bd,bean);
+        return bean;
     }
 
+    /**
+     * 初始化bean
+     * @param bd
+     * @return
+     */
+    private Object instantiateBean(BeanDefinition bd){
+        //获取类加载器
+        ClassLoader cl = this.getBeanClassLoader();
+        String beanClassName = bd.getBeanClassName();
+        try {
+            Class<?> clz = cl.loadClass(beanClassName);
+            //反射出类的实体
+            return clz.newInstance();
+        } catch (Exception e) {
+            throw new BeanCreationException("create bean for " + beanClassName + "failed ", e);
+        }
+    }
+
+    /**
+     * 给bean的属性进行赋值
+     * @param bd
+     * @param bean
+     */
+    protected void populateBean(BeanDefinition bd,Object bean){
+        //获取beanDefintion的value
+        List<PropertyValue> pvs = bd.getPropertyValues();
+        if (pvs == null || pvs.isEmpty()){
+            return;
+        }
+        BeanDefinitionValueResolver valueResolver = new BeanDefinitionValueResolver(this);
+        try {
+            for (PropertyValue pv : pvs){
+                String propertyName = pv.getName();
+                Object originalValue = pv.getValue();
+                //获取具体的实体或值
+                Object resolvedValue = valueResolver.resolveValueIfNecessary(originalValue);
+                //利用java自带的bean方法，对bean实体属性进行赋值。
+                BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
+                PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
+                for (PropertyDescriptor pd : pds){
+                    if (pd.getName().equals(propertyName)){
+                        pd.getWriteMethod().invoke(bean,resolvedValue);
+                        break;
+                    }
+                }
+            }
+        }catch (Exception e){
+            throw new BeanCreationException("Failed to obtain BeanInfo for class ["+bd.getBeanClassName()+"]");
+        }
+    }
 
     @Override
     public void setBeanClassLoader(ClassLoader classLoader) {
