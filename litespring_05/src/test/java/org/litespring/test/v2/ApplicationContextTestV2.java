@@ -25,6 +25,8 @@ public class ApplicationContextTestV2 {
 
         Assert.assertTrue(petStore.getAccountDao() instanceof AccountDao);
         Assert.assertTrue(petStore.getItemDao() instanceof ItemDao);
+        Assert.assertEquals( "zm",petStore.getOwner() );
+        Assert.assertEquals( 1 ,petStore.getVersion() );
     }
 
 
